@@ -1,0 +1,12 @@
+# Package Files #
+
+/.nyc_output
+/node_modules
+
+/coverage
+
+*.sublime-project
+
+*.sublime-workspace
+
+*package-lock.json
