@@ -10,3 +10,5 @@
 *.sublime-workspace
 
 *package-lock.json
+
+token
