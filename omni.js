@@ -12,7 +12,7 @@ const omni = new TelegramBot(token.token, { polling: true });
 omni.onText(/\/getip/, (msg) => {
   network.updateIP()
     .then(ip => {
-      console.log(moment().format('YYYY-MM-DD  HH:mm:ss'), `Send ip: ${ip}`);
+      console.log(moment().format('YYYY-MM-DD  HH:mm:ss'), `Send ip to user: ${msg.from.id}`);
       omni.sendMessage(msg.chat.id, `Current ip is ${ip}.`)
         .catch((err) => {
           console.log(moment().format('YYYY-MM-DD  HH:mm:ss'), `Error: ${err.message}`);
