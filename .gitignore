@@ -1,14 +1,12 @@
 # Package Files #
-
 /.nyc_output
 /node_modules
-
 /coverage
 
+# Private Files #
 *.sublime-project
-
 *.sublime-workspace
-
 *package-lock.json
 
 /private_info.json
+/omni.service

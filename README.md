@@ -1,17 +1,70 @@
-# omni
+# omni-bot
 DDNS and server operation bot.
 
-### h3 Available commands:
+### h2 Available commands:
+_/getmyid_ - return your Telegram ID;
 _/getip_ - return external ip;
 
+### h2 Setup and startup
+
 ### h3 private_info.json example
-Dont't forget to edit the file with your settings
+Dont't forget to edit the file with your bot token and user ID!
 
 ```json
 {
-  // Your bot token
   "token": "123456789:ABCDEFGHIJKLMNOPQRSTUV_123WXYZAB-CDEF",
-  // Your ID
   "ownerID": "111111111"
 }
+```
+
+### h3 omni.service example
+Dont't forget to edit the file for your file system!
+
+```bash
+[Unit]
+Description=Omni-bot service
+
+[Service]
+Type=simple
+
+WorkingDirectory=/var/www/omni
+ExecStart=/usr/bin/node omni.js
+ExecStop=/bin/kill $MAINPID
+ExecReload=/bin/kill -HUP $MAINPID
+
+Restart=always
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=NODE-Omni-Server
+
+User=web
+Group=web
+
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### h3 Setup systemd for start _omni-bot_ like service
+1. Go to the directory _/etc/systemd/system/_
+```bash
+  cd /etc/systemd/system/
+```
+2. Create symbolic link to file _omni.service_ in project root directory
+```bash
+  ln -s /var/www/omni/omni.service omni.service
+```
+3. Reload systemd service for re-read settings
+```bash
+  sudo systemctl daemon-reload
+```
+4. Enable _omni-bot_ like service
+```bash
+  sudo systemctl enable omni.service
+``` 
+5. Start _omni-bot_ like service
+```bash
+  sudo systemctl start omni.service
 ```

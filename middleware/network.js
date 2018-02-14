@@ -1,7 +1,6 @@
 'use strict';
 
 const fetch = require('node-fetch'),
-      moment = require('moment'),
       fs = require('fs');
 
 // Get current IP address /////////////////////////////////////////////////////////////////////////
@@ -12,16 +11,14 @@ let updateIP = () => {
   };
   return fetch('http://ip-api.com/json', options)
     .then((res) => {
-      console.log(moment().format('YYYY-MM-DD  HH:mm:ss'), 'Request succes');
+      console.log( 'Request to ip-api.com succes' );
       return res.json();
     })
     .then((data) => {
-      console.log(moment().format('YYYY-MM-DD  HH:mm:ss'), `Current ip: ${data.query.toString()}`);
-      return(data.query.toString());
+      console.log( `Current ip: ${data.query.toString()}` );
+      return data.query.toString();
     })
-    .catch((err) => {
-      console.log(moment().format('YYYY-MM-DD  HH:mm:ss'), `Fetch error: ${err.message}`);
-    });
+    .catch((err) => { console.log( `Fetch error: ${err.message}` ) });
 }
 
 let getHostname = () => {
@@ -29,7 +26,7 @@ let getHostname = () => {
     const readStream = fs.createReadStream( '/etc/hostname', { encoding: 'utf-8' } );
     let result   = '';
     readStream.on('data', (chunk) => { result += chunk });
-    readStream.on('end',  () => { resolve(result) });
+    readStream.on('end',  () => { resolve(result.replace(/\r?\n/g, "")) });
   })
 }
 
