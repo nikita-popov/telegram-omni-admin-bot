@@ -3,8 +3,7 @@
 const network = require('./middleware/network'),
       private_info = require('./private_info');
 
-const moment = require('moment'),
-      fs = require('fs');
+const moment = require('moment');
 
 const TelegramBot = require('node-telegram-bot-api'),
       omni = new TelegramBot(private_info.token, { polling: true });
