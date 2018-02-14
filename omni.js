@@ -11,12 +11,12 @@ omni.onText(/\/getmyid/, (msg) => {
   network.getHostname()
     .then((res) => {
       hostname = res;
-        console.log( `${hostname} Send user ID ${msg.from.id}` );
-        omni.sendMessage( private_info.ownerID, `${hostname}\nYour user ID: ${msg.from.id}` )
-          .catch((err) => { console.log( `${hostname} Error: ${err.message}` ) });
+        console.log(`${hostname} Send user ID ${msg.from.id}`);
+        omni.sendMessage( private_info.ownerID, `${hostname}\nYour user ID: ${msg.from.id}`)
+          .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
     })
     .catch((err) => {
-      console.log( `GetHostname error: ${err.message}` );
+      console.log(`GetHostname error: ${err.message}`);
     });
 });
 
@@ -26,23 +26,23 @@ omni.onText(/\/getip/, (msg) => {
     .then((res) => {
       hostname = res;
       if (msg.from.id != private_info.ownerID){
-        console.log( `${hostname} Unauthorized request from user ID${msg.from.id}!!!` );
+        console.log(`${hostname} Unauthorized request from user ID ${msg.from.id} !!!`);
         omni.sendMessage(private_info.ownerID, `${hostname}\nUnauthorized request from user ID ${msg.from.id} !!!`)
-          .catch((err) => { console.log( `${hostname} Error: ${err.message}` ) });
+          .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
         omni.sendMessage(msg.chat.id, `Access denied!!!`)
-          .catch((err) => { console.log( `${hostname} Error: ${err.message}` ) });
+          .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
       } else {
         network.updateIP()
           .then(ip => {
-            console.log( `${hostname} Send ip to user: ${msg.from.id}, chat ID: ${msg.chat.id}` );
+            console.log(`${hostname} Send ip to user: ${msg.from.id}`);
             omni.sendMessage(msg.chat.id, `${hostname}\nCurrent ip: ${ip}`)
-              .catch((err) => { console.log( `${hostname} Error: ${err.message}` ) });
+              .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
           })
-          .catch((err) => { console.log( `${hostname} UpdateIP error: ${err.message}` ) });
+          .catch((err) => { console.log(`${hostname} UpdateIP error: ${err.message}`) });
       }
   })
     .catch((err) => {
-      console.log( `GetHostname error: ${err.message}` );
+      console.log(`GetHostname error: ${err.message}`);
     });
 });
 
@@ -51,14 +51,14 @@ omni.on('polling_error', (err) => {
   let hostname = '';
   network.getHostname()
     .then((res) => { hostname = res })
-    .catch((err) => { console.log( `GetHostname error: ${err.message}`) });
-  console.log( `${hostname} Polling error: ${err.message}` );
+    .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
+  console.log(`${hostname} Polling error: ${err.message}`);
 });
 
 omni.on('webhook_error', (err) => {
   let hostname = '';
   network.getHostname()
     .then((res) => { hostname = res })
-    .catch((err) => { console.log( `GetHostname error: ${err.message}` ) });
-  console.log( `${hostname} Webhook error: ${err.message}` );
+    .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
+  console.log(`${hostname} Webhook error: ${err.message}`);
 });

@@ -1,15 +1,14 @@
 # omni-bot
 DDNS and server operation bot.
 
-## Available commands:
-_/getmyid_ - return your Telegram ID
-_/getip_ - return external ip
+## Available commands
+* _/getmyid_ - return your Telegram ID
+* _/getip_ - return external ip
 
 ## Setup and startup
 
 ### private_info.json example
 Dont't forget to edit the file with your bot token and user ID!
-
 ```json
 {
   "token": "123456789:ABCDEFGHIJKLMNOPQRSTUV_123WXYZAB-CDEF",
@@ -19,7 +18,6 @@ Dont't forget to edit the file with your bot token and user ID!
 
 ### omni.service example
 Dont't forget to edit the file for your file system!
-
 ```bash
 [Unit]
 Description=Omni-bot service
@@ -54,7 +52,7 @@ WantedBy=multi-user.target
 ```
 2. Create symbolic link to file _omni.service_ in project root directory
 ```bash
-  ln -s /var/www/omni/omni.service omni.service
+  sudo ln -s /var/www/omni/omni.service omni.service
 ```
 3. Reload systemd service for re-read settings
 ```bash

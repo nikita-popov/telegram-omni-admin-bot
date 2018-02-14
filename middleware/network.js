@@ -11,14 +11,14 @@ let updateIP = () => {
   };
   return fetch('http://ip-api.com/json', options)
     .then((res) => {
-      console.log( 'Request to ip-api.com succes' );
+      console.log('Request to ip-api.com successful');
       return res.json();
     })
     .then((data) => {
-      console.log( `Current ip: ${data.query.toString()}` );
+      console.log(`Current ip: ${data.query.toString()}`);
       return data.query.toString();
     })
-    .catch((err) => { console.log( `Fetch error: ${err.message}` ) });
+    .catch((err) => { console.log(`Fetch error: ${err.message}`) });
 }
 
 let getHostname = () => {
