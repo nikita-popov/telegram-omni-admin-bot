@@ -1,5 +1,5 @@
 # omni-bot
-DDNS and server operation bot.
+DDNS and server operation Telegram bot
 
 ## Available commands
 * _/getmyid_ - return your Telegram ID
@@ -26,9 +26,9 @@ Description=Omni-bot service
 Type=simple
 
 WorkingDirectory=/var/www/omni
-ExecStart=/usr/bin/node omni.js
-ExecStop=/bin/kill $MAINPID
-ExecReload=/bin/kill -HUP $MAINPID
+ExecStart=/usr/bin/node omni.js; echo "omni-bot started"
+ExecStop=/bin/kill $MAINPID; echo "omni-bot stopped"
+ExecReload=/bin/kill -HUP $MAINPID; echo "omni-bot stopped"; echo "omni-bot started"
 
 Restart=always
 
