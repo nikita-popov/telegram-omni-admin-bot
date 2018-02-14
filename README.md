@@ -1,13 +1,13 @@
 # omni-bot
 DDNS and server operation bot.
 
-### h2 Available commands:
-_/getmyid_ - return your Telegram ID;
-_/getip_ - return external ip;
+## Available commands:
+_/getmyid_ - return your Telegram ID
+_/getip_ - return external ip
 
-### h2 Setup and startup
+## Setup and startup
 
-### h3 private_info.json example
+### private_info.json example
 Dont't forget to edit the file with your bot token and user ID!
 
 ```json
@@ -17,7 +17,7 @@ Dont't forget to edit the file with your bot token and user ID!
 }
 ```
 
-### h3 omni.service example
+### omni.service example
 Dont't forget to edit the file for your file system!
 
 ```bash
@@ -47,7 +47,7 @@ Environment=NODE_ENV=production
 WantedBy=multi-user.target
 ```
 
-### h3 Setup systemd for start _omni-bot_ like service
+### Setup systemd for start _omni-bot_ like service
 1. Go to the directory _/etc/systemd/system/_
 ```bash
   cd /etc/systemd/system/
