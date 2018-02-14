@@ -1,7 +1,7 @@
 'use strict';
 
-const fetch = require('node-fetch');
-const moment = require('moment');
+const fetch = require('node-fetch'),
+      moment = require('moment');
 
 // Get current IP address /////////////////////////////////////////////////////////////////////////
 let updateIP = () => {
