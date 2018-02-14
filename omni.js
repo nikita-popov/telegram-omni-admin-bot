@@ -11,7 +11,7 @@ const TelegramBot = require('node-telegram-bot-api'),
 // BOT function ///////////////////////////////////////////////////////////////////////////////////
 omni.onText(/\/getip/, (msg) => {
   let hostname = '';
-  getHostname()
+  network.getHostname()
     .then((res) => {
       hostname = res;
       if (msg.from.id != private_info.ownerID){
@@ -46,7 +46,7 @@ omni.onText(/\/getip/, (msg) => {
 // Error handling /////////////////////////////////////////////////////////////////////////////////
 omni.on('polling_error', (err) => {
   let hostname = '';
-  getHostname()
+  network.getHostname()
     .then((res) => {
       hostname = res;
     })
@@ -58,7 +58,7 @@ omni.on('polling_error', (err) => {
 
 omni.on('webhook_error', (err) => {
   let hostname = '';
-  getHostname()
+  network.getHostname()
     .then((res) => {
       hostname = res;
     })
