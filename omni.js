@@ -39,9 +39,11 @@ omni.onText(/\/getip/, (msg) => {
 
 // Error handling /////////////////////////////////////////////////////////////////////////////////
 omni.on('polling_error', (err) => {
+  let hostname = network.getHostname();
   console.log(moment().format('YYYY-MM-DD  HH:mm:ss'), `${hostname} Polling error: ${err.message}`);
 });
 
 omni.on('webhook_error', (err) => {
+  let hostname = network.getHostname();
   console.log(moment().format('YYYY-MM-DD  HH:mm:ss'), `${hostname} Webhook error: ${err.message}`);
 });
