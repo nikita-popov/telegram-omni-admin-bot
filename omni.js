@@ -57,7 +57,7 @@ omni.on('polling_error', (err) => {
 });
 
 omni.on('webhook_error', (err) => {
-  llet hostname = '';
+  let hostname = '';
   getHostname()
     .then((res) => {
       hostname = res;
