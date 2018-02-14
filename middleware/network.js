@@ -25,9 +25,12 @@ let updateIP = () => {
 }
 
 let getHostname = () => {
-  const readStream = fs.createReadStream( '/etc/hostname', { encoding: 'utf-8' } );
-  let result   = '';
-  readStream.on('data', (chunk) => { result += chunk });
-  readStream.on('end',  () => { return result });
+  return new Promise((resolve, reject) => {
+    const readStream = fs.createReadStream( '/etc/hostname', { encoding: 'utf-8' } );
+    let result   = '';
+    readStream.on('data', (chunk) => { result += chunk });
+    readStream.on('end',  () => { resolve(result) });
+  })
 }
+
 module.exports = { updateIP, getHostname };
