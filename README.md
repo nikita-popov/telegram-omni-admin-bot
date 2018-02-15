@@ -4,6 +4,8 @@ DDNS and server operation Telegram bot
 ## Available commands
 * _/getmyid_ - return your Telegram ID
 * _/getip_ - return external ip
+* _/gettop_ - return task count on your server
+* _/getuptime_ - returm your server uptime and load average
 
 ## Setup and startup
 
