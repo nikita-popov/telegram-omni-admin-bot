@@ -24,8 +24,13 @@ omni.onText(/\/getmyid/, (msg) => {
   network.getHostname()
     .then((hostname) => {
       console.log(`${hostname} Send user ID ${msg.from.id}`);
-      omni.sendMessage( msg.from.id, `${hostname}\nYour user ID: ${msg.from.id}`)
-        .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      if (msg.from.id == private_info.ownerID) {
+        omni.sendMessage( msg.from.id, `${hostname}\nYour user ID: ${msg.from.id}`)
+          .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      } else {
+        omni.sendMessage( msg.from.id, `Your user ID: ${msg.from.id}`)
+          .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      }
     })
     .catch((err) => {
       console.log(`GetHostname error: ${err.message}`);

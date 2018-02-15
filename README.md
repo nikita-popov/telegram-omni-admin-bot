@@ -1,5 +1,7 @@
 # omni-bot
-DDNS and server operation Telegram bot
+DDNS and server operation Telegram bot on _Node.js_. 
+Tested on version [8.9.4 LTS](https://nodejs.org/dist/v8.9.4/node-v8.9.4-x64.msi "Download 8.9.4 LTS").
+
 
 ## Available commands
 * _/getmyid_ - return your Telegram ID
@@ -8,6 +10,12 @@ DDNS and server operation Telegram bot
 * _/getuptime_ - returm your server uptime and load average
 
 ## Setup and startup
+First, install node.js (if not already installed) via the link above. 
+Files _private_info.json_ and _omni.service_ should be located in the working directory. 
+After downloading, run _npm_ in the project directory to download the dependencies and wait until the download is complete.
+```bash
+   ~/omni$ npm i
+```
 
 ### private_info.json example
 Dont't forget to edit the file with your bot token and user ID!
@@ -22,15 +30,16 @@ Dont't forget to edit the file with your bot token and user ID!
 Dont't forget to edit the file for your file system!
 ```bash
 [Unit]
-Description=Omni-bot service
+Description=NODE-Omni-Server
 
 [Service]
 Type=simple
 
 WorkingDirectory=/var/www/omni
-ExecStart=/usr/bin/node omni.js; echo "omni-bot started"
-ExecStop=/bin/kill $MAINPID; echo "omni-bot stopped"
-ExecReload=/bin/kill -HUP $MAINPID; echo "omni-bot stopped"; echo "omni-bot started"
+
+TimeoutStartSec=0
+ExecStart=/usr/bin/node omni.js
+ExecStop=/bin/kill $MAINPID
 
 Restart=always
 
@@ -68,3 +77,5 @@ WantedBy=multi-user.target
 ```bash
   sudo systemctl start omni.service
 ```
+
+Special thanks _©IP-API.com_ for the provided JSON API.
