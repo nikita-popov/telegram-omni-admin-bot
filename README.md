@@ -2,13 +2,17 @@
 DDNS and server operation Telegram bot on _Node.js_.  
 Tested on version [8.9.4 LTS](https://nodejs.org/dist/v8.9.4/node-v8.9.4-x64.msi "Download 8.9.4 LTS") and the Debian GNU/Linux 9.3 operating system.  
   
-Special thanks _©IP-API.com_ for the provided JSON API.  
+### Special thanks
+_©IP-API.com_ - for the provided JSON API  
+_©fail2ban_ - for protecting my servers  
 
 ## Available commands
 * _/getmyid_ - return your Telegram ID
 * _/getip_ - return external ip
 * _/gettop_ - return task count on your server
 * _/getuptime_ - return your server uptime and load average
+* _/getdisk_ - return disk space status
+* _/getfail2ban_ - return banned IP list in all [fail2ban](https://www.fail2ban.org "If you have fail2ban installed") jails
 
 ## Setup and startup
 First, install _Node.js_ (if not already installed) via the link above.  

@@ -5,11 +5,16 @@ const network = require('./middleware/network'),
       private_info = require('./private_info'),
       TelegramBot = require('node-telegram-bot-api'),
       omni = new TelegramBot(private_info.token, { polling: true });
+/*let   onban = new Map(),
+      ban = [];*/
 
 // BOT function ///////////////////////////////////////////////////////////////////////////////////
 let checkID = (hostname, msg) => {
   if (msg.from.id == private_info.ownerID){ return true } 
   else {
+    /*for (let id of ban){
+      if (msg.from.id == id) {}
+    }*/
     console.log(`${hostname} Unauthorized request from user ID ${msg.from.id} !!!`);
     omni.sendMessage(private_info.ownerID, `${hostname}\nUnauthorized request from user ID ${msg.from.id} !!!`)
       .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
@@ -64,7 +69,7 @@ omni.onText(/\/gettop/, (msg) => {
         bash.getTop()
           .then(top => {
             console.log(`${hostname} Send top info ${top.replace(/\r?\n/g, "")}`);
-            omni.sendMessage( private_info.ownerID, `${hostname}\nTop info:\n${top}`)
+            omni.sendMessage( private_info.ownerID, `${hostname}\n${top}`)
               .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
           })
           .catch((err) => {
@@ -86,6 +91,48 @@ omni.onText(/\/getuptime/, (msg) => {
           .then(uptime => {
             console.log(`${hostname} Send uptime info ${uptime.replace(/\r?\n/g, "")}`);
             omni.sendMessage( private_info.ownerID, `${hostname}\nUptime info: ${uptime}`)
+              .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+          })
+          .catch((err) => {
+            console.log(`GetUptime error: ${err.message}`);
+          });
+      }
+    })
+    .catch((err) => {
+      console.log(`GetHostname error: ${err.message}`);
+    });
+});
+
+// getdisk ////////////////////////////////////////////////////////////////////////////////////////
+omni.onText(/\/getdisk/, (msg) => {
+  network.getHostname()
+    .then((hostname) => {
+      if (checkID(hostname, msg)) {
+        bash.getDisk()
+          .then(df => {
+            console.log(`${hostname} Send uptime info ${df.replace(/\r?\n/g, "")}`);
+            omni.sendMessage( private_info.ownerID, `${hostname}\nDisk info:\n${df}`)
+              .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+          })
+          .catch((err) => {
+            console.log(`GetUptime error: ${err.message}`);
+          });
+      }
+    })
+    .catch((err) => {
+      console.log(`GetHostname error: ${err.message}`);
+    });
+});
+
+// getfail2ban ////////////////////////////////////////////////////////////////////////////////////
+omni.onText(/\/getfail2ban/, (msg) => {
+  network.getHostname()
+    .then((hostname) => {
+      if (checkID(hostname, msg)) {
+        bash.fail2ban()
+          .then(banned => {
+            console.log(`${hostname} Send fail2ban banned IP info: ${banned.replace(/\r?\n/g, "")}`);
+            omni.sendMessage( private_info.ownerID, `${hostname}\nBanned IP list:\n${banned}`)
               .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
           })
           .catch((err) => {
