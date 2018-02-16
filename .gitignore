@@ -6,7 +6,6 @@
 # Private Files #
 *.sublime-project
 *.sublime-workspace
-*package-lock.json
 /test
 
 /private_info.json

@@ -64,7 +64,7 @@ omni.onText(/\/gettop/, (msg) => {
         bash.getTop()
           .then(top => {
             console.log(`${hostname} Send top info ${top.replace(/\r?\n/g, "")}`);
-            omni.sendMessage( private_info.ownerID, `${hostname}\nTop info: ${top}`)
+            omni.sendMessage( private_info.ownerID, `${hostname}\nTop info:\n${top}`)
               .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
           })
           .catch((err) => {
