@@ -60,9 +60,7 @@ omni.onText(/\/getmyid/, (msg) => {
           .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
       }
     })
-    .catch((err) => {
-      console.log(`GetHostname error: ${err.message}`);
-    });
+    .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
 });
 
 // getip //////////////////////////////////////////////////////////////////////////////////////////
@@ -79,9 +77,7 @@ omni.onText(/\/getip/, (msg) => {
           .catch((err) => { console.log(`${hostname} UpdateIP error: ${err.message}`) });
       }
     })
-    .catch((err) => {
-      console.log(`GetHostname error: ${err.message}`);
-    });
+    .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
 });
 
 // gettop /////////////////////////////////////////////////////////////////////////////////////////
@@ -95,14 +91,10 @@ omni.onText(/\/gettop/, (msg) => {
             omni.sendMessage( private_info.ownerID, `${hostname}\n${top}`)
               .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
           })
-          .catch((err) => {
-            console.log(`GetTop error: ${err.message}`);
-          });
+          .catch((err) => { console.log(`GetTop error: ${err.message}`) });
       }
     })
-    .catch((err) => {
-      console.log(`GetHostname error: ${err.message}`);
-    });
+    .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
 });
 
 // getuptime //////////////////////////////////////////////////////////////////////////////////////
@@ -116,14 +108,10 @@ omni.onText(/\/getuptime/, (msg) => {
             omni.sendMessage( private_info.ownerID, `${hostname}\nUptime info: ${uptime}`)
               .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
           })
-          .catch((err) => {
-            console.log(`GetUptime error: ${err.message}`);
-          });
+          .catch((err) => { console.log(`GetUptime error: ${err.message}`) });
       }
     })
-    .catch((err) => {
-      console.log(`GetHostname error: ${err.message}`);
-    });
+    .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
 });
 
 // getdisk ////////////////////////////////////////////////////////////////////////////////////////
@@ -137,14 +125,10 @@ omni.onText(/\/getdisk/, (msg) => {
             omni.sendMessage( private_info.ownerID, `${hostname}\nDisk info:\n${df}`)
               .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
           })
-          .catch((err) => {
-            console.log(`GetUptime error: ${err.message}`);
-          });
+          .catch((err) => { console.log(`GetUptime error: ${err.message}`) });
       }
     })
-    .catch((err) => {
-      console.log(`GetHostname error: ${err.message}`);
-    });
+    .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
 });
 
 // getfail2ban ////////////////////////////////////////////////////////////////////////////////////
@@ -163,10 +147,24 @@ omni.onText(/\/getfail2ban/, (msg) => {
           });
       }
     })
-    .catch((err) => {
-      console.log(`GetHostname error: ${err.message}`);
-    });
+    .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
 });
+
+// getbanned //////////////////////////////////////////////////////////////////////////////////////
+omni.onText(/\/getbanned/, (msg) => {
+  network.getHostname()
+    .then((hostname) => {
+      if (checkID(hostname, msg)) {
+        let banlist = '';
+        for (let i of bannedID){ banlist += i + '\n' }
+        console.log(`${hostname} Send banned users info: ${banlist}`);
+        omni.sendMessage(msg.chat.id, `${hostname}\nBanned users:\n${banlist}`)
+          .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      }
+    })
+    .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
+});
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Error handling /////////////////////////////////////////////////////////////////////////////////

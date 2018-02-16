@@ -12,7 +12,8 @@ _©fail2ban_ - for protecting my servers
 * _/gettop_ - return task count on your server
 * _/getuptime_ - return your server uptime and load average
 * _/getdisk_ - return disk space status
-* _/getfail2ban_ - return banned IP list in all [fail2ban](https://www.fail2ban.org "If you have fail2ban installed") jails
+* _/getfail2ban_ - return banned IP list in all [fail2ban](https://www.fail2ban.org "If you have fail2ban installed") jails  
+* _/getbanned_ - returns a list of users who have many spam and have been blocked. Saves the state only until the bot is restarted.  
 
 ## Setup and startup
 First, install _Node.js_ (if not already installed) via the link above.  
