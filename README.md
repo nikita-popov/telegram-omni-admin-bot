@@ -1,6 +1,6 @@
 # omni-bot
-DDNS and server operation Telegram bot on _Node.js_.  
-Tested on version [8.9.4 LTS](https://nodejs.org/dist/v8.9.4/node-v8.9.4-x64.msi "Download 8.9.4 LTS") and the Debian GNU/Linux 9.3 operating system.  
+DDNS and server operation Telegram bot.  
+Tested on Node.js version [8.9.4 LTS](https://nodejs.org/dist/v8.9.4/node-v8.9.4-x64.msi "Download 8.9.4 LTS") and Debian GNU/Linux 9.3.  
   
 ### Special thanks
 _©IP-API.com_ - for the provided JSON API  

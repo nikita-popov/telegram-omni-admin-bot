@@ -5,16 +5,39 @@ const network = require('./middleware/network'),
       private_info = require('./private_info'),
       TelegramBot = require('node-telegram-bot-api'),
       omni = new TelegramBot(private_info.token, { polling: true });
-/*let   onban = new Map(),
-      ban = [];*/
+let   onbanID = new Map(),
+      bannedID = [];
 
 // BOT function ///////////////////////////////////////////////////////////////////////////////////
 let checkID = (hostname, msg) => {
   if (msg.from.id == private_info.ownerID){ return true } 
-  else {
-    /*for (let id of ban){
-      if (msg.from.id == id) {}
-    }*/
+  else if (!onbanID.has(msg.from.id)) {
+    for (let id of bannedID){
+      if (msg.from.id == id) {
+        omni.sendMessage(msg.chat.id, 'You was bannedID')
+          .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+        return false;
+      }
+    }
+  } else if (onbanID.has(msg.from.id)) {
+    let count = parseInt(onbanID.get(msg.from.id));
+    if (count < 3) {
+      onbanID.set(msg.from.id, count+1);
+      console.log(`${hostname} Unauthorized request from user ID ${msg.from.id} !!!`);
+      omni.sendMessage(private_info.ownerID, `${hostname}\nUnauthorized request from user ID ${msg.from.id} !!!`)
+        .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      omni.sendMessage(msg.chat.id, `Access denied!!!`)
+        .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      return false;
+    } else {
+      onbanID.delete(msg.from.id);
+      bannedID.push(msg.from.id);
+      omni.sendMessage(msg.chat.id, 'You was bannedID')
+        .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      return false;
+    }
+  } else {
+    onbanID.set(msg.from.id, 1);
     console.log(`${hostname} Unauthorized request from user ID ${msg.from.id} !!!`);
     omni.sendMessage(private_info.ownerID, `${hostname}\nUnauthorized request from user ID ${msg.from.id} !!!`)
       .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
