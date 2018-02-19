@@ -2,6 +2,7 @@
 
 const network = require('./middleware/network'),
       bash = require('./middleware/bash'),
+      devices = require('/middleware/devices'),
       private_info = require('./private_info'),
       TelegramBot = require('node-telegram-bot-api'),
       omni = new TelegramBot(private_info.token, { polling: true });
@@ -157,6 +158,20 @@ omni.onText(/\/getbanned/, (msg) => {
       for (let i of bannedID){ banlist += i + '\n' }
       console.log(`${hostname} Send banned users info: ${banlist}`);
       omni.sendMessage(msg.chat.id, `${hostname}\nBanned users:\n${banlist}`)
+      .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+    }
+  })
+  .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
+});
+
+// getcam /////////////////////////////////////////////////////////////////////////////////////////
+omni.onText(/\/getcam (.+)/, (msg, camera) => {
+  network.getHostname()
+  .then((hostname) => {
+    if (checkID(hostname, msg)) {
+      //devices.getFrame(camera)
+      console.log(`${hostname} Send camera ${camera} frame.`);
+      omni.sendPhoto(msg.chat.id, './examples/test.png',`${hostname}\n${camera}`)
       .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
     }
   })

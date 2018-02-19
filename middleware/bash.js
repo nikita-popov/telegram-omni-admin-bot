@@ -31,10 +31,8 @@ let getTop = () => {
             temp = result;
         result = '';
         for (let word of temp){
-          //if (word == '') { word = '\n' }
           result += word + ' ';
         }
-        //result.replace(/\r?,/g, ":\n");
         resolve(result.replace(/\r?:|,/g, "\n"))
       }
     })
