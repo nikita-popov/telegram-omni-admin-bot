@@ -71,42 +71,42 @@ let getJails = () => {
 
 let getList = (ipres, jail) => {
   return new Promise((resolve, reject) => {
-  let ipList = exec(`sudo fail2ban-client status ${jail}|grep Banned`, (error, stdout, stderr) => {
-    if (error) { reject(error.code) }
-    else {
-      let iparr = stdout.split(':'),
-          temp = iparr[1].split(',');
-      for (let ip of temp){
-        ip = ip.replace(/\t|\n/g," ");
-        ipres.push(ip.trim());
+    let ipList = exec(`sudo fail2ban-client status ${jail}|grep Banned`, (error, stdout, stderr) => {
+      if (error) { reject(error.code) }
+      else {
+        let iparr = stdout.split(':'),
+            temp = iparr[1].split(',');
+        ipres.push(`${jail}:\n`);
+        for (let ip of temp){
+          ip = ip.replace(/\t|\n/g," ");
+          ipres.push(ip.trim() + '\n');
+        }
+        resolve(ipres)
       }
-      resolve(ipres)
-    }
-  })
+    })
   })
 }
 
 let fail2ban = () => {
   return new Promise((resolve, reject) => {
     getJails()
-      .then(jails => {
-        let ipres = [];
-        for (let jail of jails) {
-          getList(ipres, jail)
-            .then(stdout => {
-              if (jails.indexOf(jail) == jails.length-1){
-                let str = '';
-                for (let i of ipres){
-                  str += i + '\n'
-                }
-                //console.log(str);
-                resolve(str)
-              }
-            })
-            .catch((err) => { console.log(err.message) });
-        }
-      })
-      .catch((err) => { console.log(err.message) });
+    .then(jails => {
+      let ipres = [];
+      for (let jail of jails) {
+        getList(ipres, jail)
+        .then(stdout => {
+          if (jails.indexOf(jail) == jails.length-1){
+            let str = '';
+            for (let i of ipres){
+              str += i + '\n'
+            }
+            resolve(str)
+          }
+        })
+        .catch((err) => { console.log(err.message) });
+      }
+    })
+    .catch((err) => { console.log(err.message) });
   })
 }
 
