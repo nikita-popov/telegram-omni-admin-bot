@@ -11,23 +11,26 @@ let   onbanID = new Map(),
 
 // BOT function ///////////////////////////////////////////////////////////////////////////////////
 let checkID = (hostname, msg) => {
-  let userID = msg.from.id;
-  console.log(userID);
-  if (userID == private_info.ownerID){
-    return true
-  } 
+  let userID = msg.from.id.toString();
+  if (userID == private_info.ownerID) { return true }
   else if (!onbanID.has(userID)) {
-    console.log(onbanID.has(userID));
     let isBan = false;
     for (let id of bannedID){
-      if (userID == id) {
-        isBan = true
-      }
-      if (isBan){
-        omni.sendMessage(msg.chat.id, 'You was bannedID')
-        .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
-        return false;
-      }
+      if (userID == id) { isBan = true }
+    }
+    if (isBan) {
+      console.log(`${hostname} Request from banned user ${userID}`);
+      omni.sendMessage(msg.chat.id, 'You was bannedID')
+      .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      return false;
+    } else if (!isBan) {
+      onbanID.set(userID, 1);
+      console.log(`${hostname} Unauthorized request from user ID ${userID} !!!`);
+      omni.sendMessage(private_info.ownerID, `${hostname}\nUnauthorized request from user ID ${userID} !!!`)
+      .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      omni.sendMessage(msg.chat.id, `Access denied!!!`)
+      .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      return false;
     }
   } else if (onbanID.has(userID)) {
     let count = parseInt(onbanID.get(userID));
@@ -46,14 +49,6 @@ let checkID = (hostname, msg) => {
       .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
       return false;
     }
-  } else {
-    onbanID.set(msg.from.id, 1);
-    console.log(`${hostname} Unauthorized request from user ID ${msg.from.id} !!!`);
-    omni.sendMessage(private_info.ownerID, `${hostname}\nUnauthorized request from user ID ${msg.from.id} !!!`)
-    .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
-    omni.sendMessage(msg.chat.id, `Access denied!!!`)
-    .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
-    return false;
   }
 }
 
@@ -164,8 +159,8 @@ omni.onText(/\/getbanned/, (msg) => {
   .then((hostname) => {
     if (checkID(hostname, msg)) {
       let banlist = '';
-      for (let i of bannedID){ banlist += i + '\n' }
-      console.log(`${hostname} Send banned users info: ${banlist}`);
+      for (let id of bannedID){ banlist += id + '\n' }
+      console.log(`${hostname} Send banned users info: ${banlist.replace(/\r?\n/g, " ")}`);
       omni.sendMessage(msg.chat.id, `${hostname}\nBanned users:\n${banlist}`)
       .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
     }
