@@ -2,7 +2,7 @@
 
 const network = require('./middleware/network'),
       bash = require('./middleware/bash'),
-      //devices = require('/middleware/devices'),
+      dev = require('./middleware/dev'),
       private_info = require('./private_info'),
       TelegramBot = require('node-telegram-bot-api'),
       omni = new TelegramBot(private_info.token, { polling: true });
@@ -148,7 +148,7 @@ omni.onText(/\/getfail2ban/, (msg) => {
         .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
       })
       .catch((err) => { console.log(`GetUptime error: ${err.message}`) });
-      }
+    }
   })
   .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
 });
@@ -173,10 +173,13 @@ omni.onText(/\/getcam (.+)/, (msg, camera) => {
   network.getHostname()
   .then((hostname) => {
     if (checkID(hostname, msg)) {
-      //devices.getFrame(camera)
-      console.log(`${hostname} Send camera ${camera[1]} frame.`);
-      omni.sendPhoto(msg.chat.id, './examples/test.png',{caption:`${hostname} ${camera[1]}`});
-      //.catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      dev.getFrame(camera[1])
+      .then(cam => {
+        console.log(`${hostname} Send camera ${cam} frame.`);
+        omni.sendPhoto(msg.chat.id, `./frames/frame${camera[1]}.jpg`,{caption:`${hostname}  ${cam}`})
+        .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      })
+      .catch(err => { console.log(`${hostname} Error: ${err}`) });
     }
   })
   .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
