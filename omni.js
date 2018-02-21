@@ -2,7 +2,7 @@
 
 const network = require('./middleware/network'),
       bash = require('./middleware/bash'),
-      devices = require('/middleware/devices'),
+      //devices = require('/middleware/devices'),
       private_info = require('./private_info'),
       TelegramBot = require('node-telegram-bot-api'),
       omni = new TelegramBot(private_info.token, { polling: true });
@@ -11,28 +11,37 @@ let   onbanID = new Map(),
 
 // BOT function ///////////////////////////////////////////////////////////////////////////////////
 let checkID = (hostname, msg) => {
-  if (msg.from.id == private_info.ownerID){ return true } 
-  else if (!onbanID.has(msg.from.id)) {
+  let userID = msg.from.id;
+  console.log(userID);
+  if (userID == private_info.ownerID){
+    return true
+  } 
+  else if (!onbanID.has(userID)) {
+    console.log(onbanID.has(userID));
+    let isBan = false;
     for (let id of bannedID){
-      if (msg.from.id == id) {
+      if (userID == id) {
+        isBan = true
+      }
+      if (isBan){
         omni.sendMessage(msg.chat.id, 'You was bannedID')
         .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
         return false;
       }
     }
-  } else if (onbanID.has(msg.from.id)) {
-    let count = parseInt(onbanID.get(msg.from.id));
+  } else if (onbanID.has(userID)) {
+    let count = parseInt(onbanID.get(userID));
     if (count < 3) {
-      onbanID.set(msg.from.id, count+1);
-      console.log(`${hostname} Unauthorized request from user ID ${msg.from.id} !!!`);
-      omni.sendMessage(private_info.ownerID, `${hostname}\nUnauthorized request from user ID ${msg.from.id} !!!`)
+      onbanID.set(userID, count+1);
+      console.log(`${hostname} Unauthorized request from user ID ${userID} !!!`);
+      omni.sendMessage(private_info.ownerID, `${hostname}\nUnauthorized request from user ID ${userID} !!!`)
       .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
       omni.sendMessage(msg.chat.id, `Access denied!!!`)
       .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
       return false;
     } else {
-      onbanID.delete(msg.from.id);
-      bannedID.push(msg.from.id);
+      onbanID.delete(userID);
+      bannedID.push(userID);
       omni.sendMessage(msg.chat.id, 'You was bannedID')
       .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
       return false;
@@ -170,9 +179,9 @@ omni.onText(/\/getcam (.+)/, (msg, camera) => {
   .then((hostname) => {
     if (checkID(hostname, msg)) {
       //devices.getFrame(camera)
-      console.log(`${hostname} Send camera ${camera} frame.`);
-      omni.sendPhoto(msg.chat.id, './examples/test.png',`${hostname}\n${camera}`)
-      .catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
+      console.log(`${hostname} Send camera ${camera[1]} frame.`);
+      omni.sendPhoto(msg.chat.id, './examples/test.png',{caption:`${hostname} ${camera[1]}`});
+      //.catch((err) => { console.log(`${hostname} Error: ${err.message}`) });
     }
   })
   .catch((err) => { console.log(`GetHostname error: ${err.message}`) });
