@@ -1,14 +1,14 @@
 {
-  "name": "omni",
+  "name": "telegram-omni-admin-bot",
   "version": "1.3.1",
-  "description": "DDNS and bot server",
+  "description": "DynDNS and operation server",
   "main": "omni.js",
   "scripts": {
     "test": "node_modules/mocha/bin/mocha test/**/*.test.js",
     "coverage": "nyc --reporter=lcov npm test",
     "start": "node omni.js"
   },
-  "author": "ikiti",
+  "author": "Nikita Popov",
   "license": "ISC",
   "repository" : {
   	"type" : "git",
