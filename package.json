@@ -12,7 +12,7 @@
   "license": "ISC",
   "repository" : {
   	"type" : "git",
-  	"url" : "https://github.com/nikita-projects/omni.git"
+  	"url" : "https://github.com/nikita-popov/telegram-omni-admin-bot.git"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
