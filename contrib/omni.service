@@ -1,0 +1,18 @@
+[Unit]
+Description=Omni-bot service
+[Service]
+Type=simple
+WorkingDirectory=/var/www/omni
+ExecStart=/usr/bin/node omni.js
+ExecStop=/bin/kill $MAINPID
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=NODE-Omni-Server
+User=web
+Group=web
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
