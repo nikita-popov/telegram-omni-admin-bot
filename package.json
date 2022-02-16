@@ -15,7 +15,7 @@
   	"url" : "https://github.com/nikita-popov/telegram-omni-admin-bot.git"
   },
   "dependencies": {
-    "body-parser": "^1.19.1",
+    "body-parser": "^1.19.2",
     "htmlparser": "^1.7.7",
     "node-fetch": "^3.2.0",
     "node-telegram-bot-api": "^0.56.0"
